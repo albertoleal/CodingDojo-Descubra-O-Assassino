@@ -180,8 +180,8 @@ describe("Testemunha", function() {
 
     var codigo   = testemunha.confirmar_teoria(pista);
 
-    expect(codigo).toBeInside(["0"]);
-    //expect(codigo).toContain(["0"]);
+    expect(codigo).toBeInside(["CIT"]);
+    //expect(codigo).toContain(["CIT"]);
   });
 });
 
@@ -222,7 +222,9 @@ describe("Detetive", function(){
     expect(crime.get_armas()).toContain(arma);
   });
   
-  xit("deve solucionar caso", function() {
-   // var detetive = new Detetive
+  it("deve solucionar caso", function() {
+    var solucao = detetive.solucionar_crime();
+    
+    expect(solucao).toEqual([testemunha.get_assassino(), testemunha.get_local(), testemunha.get_arma()]);
   });
 });

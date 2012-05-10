@@ -62,11 +62,11 @@ function Detetive (crime) {
     }
   }
   
-  this.elaborar_teoria = function() {
-    var suspeitos = crime.get_suspeitos();
-    var locais    = crime.get_locais();
-    var armas     = crime.get_armas();
-    
+  var suspeitos = crime.get_suspeitos();
+  var locais    = crime.get_locais();
+  var armas     = crime.get_armas();
+  
+  this.elaborar_teoria = function() {    
     var assassino = suspeitos.random();
     var local     = locais.random();
     var arma      = armas.random();
@@ -77,6 +77,60 @@ function Detetive (crime) {
     pista.push(arma);
 
     return pista;
+  }
+  
+  this.solucionar_crime = function () {
+    var testemunha = new Testemunha(crime);
+    testemunha.reconstituir_crime();
+    
+    solucionado = false;
+    teoria = this.elaborar_teoria();
+    
+  
+    while(solucionado === false){
+      teoria = this.elaborar_teoria();
+      
+      var check_teoria = testemunha.confirmar_teoria(teoria);
+      
+      if (check_teoria === "CIT") {
+        alert(teoria[0]);
+        solucionado = true;
+        break;
+      }
+      
+      if (check_teoria == "1") {
+        alert("11:"+ teoria[0]);
+        suspeitos.remove_element(teoria[0]);
+      }
+      
+      if (check_teoria == "2") {
+        locais.remove_element(teoria[1]);
+      }
+      
+      
+      if (check_teoria == "3") {
+        armas.remove_element(teoria[2]);
+      }
+      
+      /*switch(check_teoria) {
+        case "0":
+          solucionado = true;
+          alert(teoria[0]);
+         // alert("Assassino: "+ teoria + " Local: "+ teoria[1]  + " Arma: "+ teoria[2] +"Assassino: "+ testemunha.get_assassino() + " Local: "+ testemunha.get_local()  + " Arma: "+ testemunha.get_arma() );
+          break;
+        case "1":
+          suspeitos.remove_element(teoria[0]);
+          break;
+        case "2":
+          locais.remove_element(teoria[1]);
+          break;
+        case "3":
+          armas.remove_element(teoria[2]);
+          break;    
+      }*/
+    }
+    
+    return teoria; 
   }
 }
 
@@ -92,7 +146,7 @@ function Testemunha(crime) {
   var local     = null;
   var arma      = null;
   
-  var CRIME_SOLUCIONADO = "0";
+  var CRIME_SOLUCIONADO = "CIT";
   var ASSASSINO_ERRADO  = "1";
   var LOCAL_ERRADO      = "2";
   var ARMA_ERRADA       = "3";
@@ -123,7 +177,7 @@ function Testemunha(crime) {
     
     return code.random();
   }
-  
+
   this.get_assassino = function () {
     var suspeitos = crime.get_suspeitos();
     return suspeitos[assassino];
