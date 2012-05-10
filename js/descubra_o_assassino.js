@@ -14,10 +14,6 @@ Array.prototype.random = function(){
 }
 
 function Crime () {
-  var assassino = null;
-  var local     = null;
-  var arma      = null;
-  var solucionado = false;
   var suspeitos = new Array();
   var locais    = new Array();
   var armas     = new Array();
@@ -46,30 +42,6 @@ function Crime () {
   armas[3] = 'Trebuchet';
   armas[4] = 'Maça';
   armas[5] = 'Gládio';
-    
-  this.compor_cena = function () {
-    if(assassino == null || local == null || arma == null){
-      assassino = suspeitos.random();
-      local     = locais.random();
-      arma      = armas.random();
-    }
-  }
-
-  this.get_assassino = function () {
-    return suspeitos[assassino];
-  }
-
-  this.get_local = function () {
-    return locais[local];
-  }
-  
-  this.get_arma = function () {
-    return armas[arma];
-  } 
-
-  this.solucionado = function(){
-    return solucionado;
-  }
   
   this.get_suspeitos = function(){ 
     return suspeitos;
@@ -90,17 +62,11 @@ function Detetive (crime) {
     }
   }
   
-  var CRIME_SOLUCIONADO = "0";
-  var ASSASSINO_ERRADO  = "1";
-  var LOCAL_ERRADO      = "2";
-  var ARMA_ERRADA       = "3";
-  
-  this.encontrar_pista = function() {
+  this.elaborar_teoria = function() {
     var suspeitos = crime.get_suspeitos();
     var locais    = crime.get_locais();
     var armas     = crime.get_armas();
     
-    //Fazendo o primeiro chute
     var assassino = suspeitos.random();
     var local     = locais.random();
     var arma      = armas.random();
@@ -112,17 +78,43 @@ function Detetive (crime) {
 
     return pista;
   }
+}
+
+function Testemunha(crime) {
+  if (crime == "" || crime == undefined) {
+    throw {
+      name: "Error",
+      message: "Testemunha deve conhecer o crime."
+    }
+  }
   
-  this.solucionar_crime = function(pista){
+  var assassino = null;
+  var local     = null;
+  var arma      = null;
+  
+  var CRIME_SOLUCIONADO = "0";
+  var ASSASSINO_ERRADO  = "1";
+  var LOCAL_ERRADO      = "2";
+  var ARMA_ERRADA       = "3";
+  
+  this.reconstituir_crime = function () {
+    if(assassino == null || local == null || arma == null){
+      assassino = crime.get_suspeitos().random();
+      local     = crime.get_locais().random();
+      arma      = crime.get_armas().random();
+    }
+  }
+  
+  this.confirmar_teoria = function(teoria){
     var code = new Array();
     
-    if (pista[0] != crime.get_assassino()) {
+    if (teoria[0] != this.get_assassino()) {
       code.push(ASSASSINO_ERRADO);
     }
-    if(pista[1] != crime.get_local()) {
+    if(teoria[1] != this.get_local()) {
       code.push(LOCAL_ERRADO);
     }
-    if(pista[2] != crime.get_arma()) {
+    if(teoria[2] != this.get_arma()) {
       code.push(ARMA_ERRADA);
     }
     if (code.length == 0) {
@@ -132,5 +124,18 @@ function Detetive (crime) {
     return code.random();
   }
   
+  this.get_assassino = function () {
+    var suspeitos = crime.get_suspeitos();
+    return suspeitos[assassino];
+  }
+
+  this.get_local = function () {
+    var locais = crime.get_locais();
+    return locais[local];
+  }
   
+  this.get_arma = function () {
+    var armas = crime.get_armas();
+    return armas[arma];
+  } 
 }
