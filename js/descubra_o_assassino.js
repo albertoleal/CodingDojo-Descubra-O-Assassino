@@ -65,6 +65,11 @@ function Detetive (crime) {
   var suspeitos = crime.get_suspeitos();
   var locais    = crime.get_locais();
   var armas     = crime.get_armas();
+  var testemunha = null;
+  
+  this.get_testemunha = function () {
+    return testemunha;
+  }
   
   this.elaborar_teoria = function() {    
     var assassino = suspeitos.random();
@@ -80,7 +85,7 @@ function Detetive (crime) {
   }
   
   this.solucionar_crime = function () {
-    var testemunha = new Testemunha(crime);
+    testemunha = new Testemunha(crime);
     testemunha.reconstituir_crime();
     
     solucionado = false;
