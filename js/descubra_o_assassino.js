@@ -19,29 +19,29 @@ function Crime () {
   var armas     = new Array();
 
   suspeitos[0] = 'Charles B. Abbage';
-  suspeitos[1] = 'Donald Duck Knuth';
-  suspeitos[2] = 'Ada L. Ovelace';
-  suspeitos[3] = 'Alan T. Uring';
-  suspeitos[4] = 'Ivar J. Acobson';
-  suspeitos[5] = 'Ras Mus Ler Dorf';
+  // suspeitos[1] = 'Donald Duck Knuth';
+  // suspeitos[2] = 'Ada L. Ovelace';
+  // suspeitos[3] = 'Alan T. Uring';
+  // suspeitos[4] = 'Ivar J. Acobson';
+  // suspeitos[5] = 'Ras Mus Ler Dorf';
   
   locais[0] = 'Redmond';
-  locais[1] = 'Palo Alto';
-  locais[2] = 'San Francisco';
-  locais[3] = 'Tokio';
-  locais[4] = 'Restaurante no Fim do Universo';
-  locais[5] = 'São Paulo';
-  locais[6] = 'Cupertino';
-  locais[7] = 'Helsinki';
-  locais[8] = 'Maida Vale';
-  locais[9] = 'Toronto';
+  // locais[1] = 'Palo Alto';
+  // locais[2] = 'San Francisco';
+  // locais[3] = 'Tokio';
+  // locais[4] = 'Restaurante no Fim do Universo';
+  // locais[5] = 'São Paulo';
+  // locais[6] = 'Cupertino';
+  // locais[7] = 'Helsinki';
+  // locais[8] = 'Maida Vale';
+  // locais[9] = 'Toronto';
   
   armas[0] = 'Peixeira';
-  armas[1] = 'DynaTAC 8000X';
-  armas[2] = 'Trezoitão';
-  armas[3] = 'Trebuchet';
-  armas[4] = 'Maça';
-  armas[5] = 'Gládio';
+  // armas[1] = 'DynaTAC 8000X';
+  // armas[2] = 'Trezoitão';
+  // armas[3] = 'Trebuchet';
+  // armas[4] = 'Maça';
+  // armas[5] = 'Gládio';
   
   this.get_suspeitos = function(){ 
     return suspeitos;
@@ -87,28 +87,28 @@ function Detetive (crime) {
     teoria = this.elaborar_teoria();
     
   
-    while(solucionado === false){
+    while(solucionado == false){
       teoria = this.elaborar_teoria();
-      
       var check_teoria = testemunha.confirmar_teoria(teoria);
       
       if (check_teoria === "CIT") {
-        alert(teoria[0]);
         solucionado = true;
-        break;
+        
       }
       
       if (check_teoria == "1") {
-        alert("11:"+ teoria[0]);
+       // alert("11:"+ teoria[0]);
         suspeitos.remove_element(teoria[0]);
       }
       
       if (check_teoria == "2") {
+          //      alert("22:"+ teoria[0]);
         locais.remove_element(teoria[1]);
       }
       
       
       if (check_teoria == "3") {
+       //         alert("33:"+ teoria[0]);
         armas.remove_element(teoria[2]);
       }
       
@@ -129,7 +129,7 @@ function Detetive (crime) {
           break;    
       }*/
     }
-    
+    alert(teoria);
     return teoria; 
   }
 }
@@ -157,6 +157,7 @@ function Testemunha(crime) {
       local     = crime.get_locais().random();
       arma      = crime.get_armas().random();
     }
+    //alert("Crime"+ assassino +" "+ local + " "+ arma);
   }
   
   this.confirmar_teoria = function(teoria){
@@ -180,16 +181,16 @@ function Testemunha(crime) {
 
   this.get_assassino = function () {
     var suspeitos = crime.get_suspeitos();
-    return suspeitos[assassino];
+    return assassino;
   }
 
   this.get_local = function () {
     var locais = crime.get_locais();
-    return locais[local];
+    return local;
   }
   
   this.get_arma = function () {
     var armas = crime.get_armas();
-    return armas[arma];
+    return arma;
   } 
 }

@@ -225,6 +225,6 @@ describe("Detetive", function(){
   it("deve solucionar caso", function() {
     var solucao = detetive.solucionar_crime();
     
-    expect(solucao).toEqual([testemunha.get_assassino(), testemunha.get_local(), testemunha.get_arma()]);
+   expect(solucao).toEqual([testemunha.get_assassino(), testemunha.get_local(), testemunha.get_arma()]);
   });
 });
